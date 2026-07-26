@@ -1,5 +1,7 @@
-﻿import yt_dlp
+﻿#Import library to download videos
+import yt_dlp
 
+#Uses Chocolatey and FFMPEG to separate audio and ensure it is in the best quality
 def DownloadAudio(url):
     ydl_opts = {'format': 'bestaudio/best','postprocessors':[{'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3', 'preferredquality':'192'}],
@@ -8,6 +10,7 @@ def DownloadAudio(url):
         ydl.download([url])
 
 def main():
+    #urlInput = " "
     url = "https://youtu.be/QmbIrBrCozA"
     DownloadAudio(url)
 
