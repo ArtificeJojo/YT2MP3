@@ -16,6 +16,13 @@ def main():
     url = ""
     if request.method == "POST":
         url = request.form.get("url")
-    DownloadAudio(url)
+        DownloadAudio(url)
+        return f"Link has been downloaded"
+
+    if request.method == "GET":
+        return
+        #Return mp3 file
+
+    return render_template("MainPage.html")
 
 main()
