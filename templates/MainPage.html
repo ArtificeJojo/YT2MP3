@@ -9,6 +9,29 @@
         <label for="yturl">Paste or Type Link:</label>
         <input type="text" id="yturl" name="ytUrl" placeholder="link">
         <button type="submit">Convert</button>
+        <button id = "dl">Download</button>
+        <p id = "Response"></p>
     </form>
 </body>
 </html>
+
+<script>
+    const buttonPost = document.getElementsByName('submit')
+    const buttonGet = document.getElementById('dl')
+
+    buttonPost.addEventListener('click', async () => {
+        fetch('/api/triggrt-action').then(response=>response.json()).then(data => {
+            document.getElementById('Response').innerTest = data.message;
+        })
+            .catch(error => console.error('Error:', error));
+    });
+
+    buttonGet.addEventListener('click', async () =>{
+        const response = await fetch('/api/data', { method: 'GET'});
+        const result = await response.json();
+        document.getElementById('Response')
+
+            .catch(error => console.error('Error:', error))
+    })
+
+</script>

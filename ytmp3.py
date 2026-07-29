@@ -1,6 +1,7 @@
 ﻿#Import library to download videos
 import yt_dlp
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+
 app = Flask(__name__)
 
 #Uses Chocolatey and FFMPEG to separate audio and ensure it is in the best quality
@@ -9,18 +10,19 @@ def DownloadAudio(url):
                 'preferredcodec': 'mp3', 'preferredquality':'192'}],
                 }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        return ydl.download([url])
 
-@app.route('/', methods = ['GET', 'POST'])
+@app.route('/api/data', methods = ['GET', 'POST'])
 def main():
     url = ""
+    mp3 = None
     if request.method == "POST":
         url = request.form.get("url")
-        DownloadAudio(url)
-        return f"Link has been downloaded"
+        mp3 = DownloadAudio(url)
+        return jsonify({"success": True})
 
     if request.method == "GET":
-        return
+        return mp3
         #Return mp3 file
 
     return render_template("MainPage.html")
